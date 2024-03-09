@@ -1,0 +1,7 @@
+.title {
+  display: flex;
+}
+
+.not__show {
+  display: none;
+}
