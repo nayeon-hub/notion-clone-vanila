@@ -7,14 +7,6 @@ export default function DocList({ $target, initialState, onValueChange }) {
 
   this.state = initialState;
 
-  const docListItem = new DocListItem({
-    $target: $ul,
-    initialState: {
-      doc: this.state,
-      depth: 1,
-    },
-  });
-
   this.setState = (nextState) => {
     this.state = nextState;
     docListItem.setState({
@@ -22,6 +14,14 @@ export default function DocList({ $target, initialState, onValueChange }) {
       depth: 1,
     });
   };
+
+  const docListItem = new DocListItem({
+    $target: $ul,
+    initialState: {
+      doc: this.state,
+      depth: 1,
+    },
+  });
 
   this.render = () => {};
 
@@ -44,6 +44,7 @@ export default function DocList({ $target, initialState, onValueChange }) {
 
     if (evt.target.className.includes("add__btn")) {
       const parentNode = evt.target.closest("li");
+      const parentDepth = parentNode.dataset.depth;
       const parentId = parentNode.id;
       const doc = await createDoc("/", {
         body: JSON.stringify({
@@ -53,22 +54,22 @@ export default function DocList({ $target, initialState, onValueChange }) {
       });
 
       let $childUlNode = parentNode.querySelector("ul");
-      const $li = document.createElement("li");
-
-      $li.id = doc.id;
 
       if (!$childUlNode) {
         const $ul = document.createElement("ul");
+        $ul.style.paddingLeft = `${(parseInt(parentDepth) + 1) * 14}px`;
         parentNode.appendChild($ul);
         $childUlNode = parentNode.querySelector("ul");
       }
 
       $childUlNode.className = "";
-      $ul.style.paddingLeft = `${(this.state.depth + 1) * 14}px`;
 
       new DocListItem({
         $target: $childUlNode,
-        initialState: { doc: [{ ...doc, documents: [] }] },
+        initialState: {
+          doc: [{ ...doc, documents: [] }],
+          depth: parseInt(parentDepth) + 1,
+        },
       });
     }
 
