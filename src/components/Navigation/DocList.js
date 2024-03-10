@@ -73,8 +73,11 @@ export default function DocList({ $target, initialState, onValueChange }) {
     }
 
     if (evt.target.className.includes("del__btn")) {
-      const currentId = evt.target.closest("li").id;
+      let $clickedLi = evt.target.closest("li");
+      const currentId = $clickedLi.id;
+      $clickedLi.remove();
       await deleteDoc(`/${currentId}`);
+      $clickedLi.remove();
     }
   });
 
