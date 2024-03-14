@@ -56,8 +56,11 @@ export default function DocList({ $target, initialState, onValueChange }) {
       let $childUlNode = parentNode.querySelector("ul");
 
       if (!$childUlNode) {
+        const noShowDiv = evt.target.closest(".title").nextSibling;
+        noShowDiv.className = "no-children not__show";
+
         const $ul = document.createElement("ul");
-        $ul.style.paddingLeft = `${(parseInt(parentDepth) + 1) * 14}px`;
+        $ul.style.paddingLeft = "28px";
         parentNode.appendChild($ul);
         $childUlNode = parentNode.querySelector("ul");
       }
@@ -74,11 +77,19 @@ export default function DocList({ $target, initialState, onValueChange }) {
     }
 
     if (evt.target.className.includes("del__btn")) {
+      let $clickedUl = evt.target.closest("ul");
+      let clickedUlChildNodes = $clickedUl.childNodes;
+
       let $clickedLi = evt.target.closest("li");
       const currentId = $clickedLi.id;
-      $clickedLi.remove();
       await deleteDoc(`/${currentId}`);
       $clickedLi.remove();
+
+      if (clickedUlChildNodes.length === 0) {
+        const noShowDiv = $clickedUl.previousSibling;
+        noShowDiv.className = "";
+        $clickedUl.remove();
+      }
     }
   });
 

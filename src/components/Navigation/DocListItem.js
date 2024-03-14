@@ -14,6 +14,9 @@ export default function DocListItem({ $target, initialState }) {
       $target.appendChild($li);
 
       const $title = document.createElement("div");
+      $title.style.height = "26px";
+      $title.style.display = "flex";
+      $title.style.alignItems = "center";
       $title.className = "title";
       $title.innerHTML = ` 
           <span class="material-icons arrow__btn">play_arrow</span>
@@ -27,11 +30,20 @@ export default function DocListItem({ $target, initialState }) {
       $li.dataset.depth = this.state.depth;
       $li.appendChild($title);
 
+      const $noChildren = document.createElement("div");
+      $noChildren.className = "no-children not__show";
+      $noChildren.innerText = "하위 메세지가 없습니다.";
+      $noChildren.style.paddingLeft = "28px";
+      $noChildren.style.height = "26px";
+      $noChildren.style.lineHeight = "26px";
+
+      $li.appendChild($noChildren);
+
       if (documents.length > 0) {
         const $ul = document.createElement("ul");
         $li.appendChild($ul);
         $ul.className = "not__show";
-        $ul.style.paddingLeft = `${(this.state.depth + 1) * 14}px`;
+        $ul.style.paddingLeft = "28px";
 
         new DocListItem({
           $target: $ul,
@@ -40,12 +52,6 @@ export default function DocListItem({ $target, initialState }) {
             depth: this.state.depth + 1,
           },
         });
-      } else {
-        const $noChildren = document.createElement("div");
-        $noChildren.className = "no-children not__show";
-        $noChildren.innerText = "하위 메세지가 없습니다.";
-
-        $li.appendChild($noChildren);
       }
     });
   };
