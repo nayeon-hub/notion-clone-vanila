@@ -20,7 +20,9 @@ export default function DocListItem({ $target, initialState }) {
       $title.className = "title";
       $title.innerHTML = ` 
           <span class="material-icons arrow__btn">play_arrow</span>
-          <span class="text">
+          <span class="text" style="display : block; text-overflow : ellipsis; white-space : nowrap; width : ${
+            165 - (this.state.depth - 1) * 28
+          }px; overflow : hidden;">
             ${title || "제목 없음"}
           </span>
           <div class="actions">
@@ -32,7 +34,7 @@ export default function DocListItem({ $target, initialState }) {
 
       const $noChildren = document.createElement("div");
       $noChildren.className = "no-children not__show";
-      $noChildren.innerText = "하위 메세지가 없습니다.";
+      $noChildren.innerText = "하위 메세지 없음";
       $noChildren.style.paddingLeft = "28px";
       $noChildren.style.height = "26px";
       $noChildren.style.lineHeight = "26px";
