@@ -1,7 +1,12 @@
 import { readDocs, createDoc, deleteDoc } from "../../util/api.js";
 import DocListItem from "./DocListItem.js";
 
-export default function DocList({ $target, initialState, onValueChange }) {
+export default function DocList({
+  $target,
+  initialState,
+  onTitleClick,
+  onValueChange,
+}) {
   const $ul = document.createElement("ul");
   $target.appendChild($ul);
 
@@ -27,6 +32,11 @@ export default function DocList({ $target, initialState, onValueChange }) {
 
   $ul.addEventListener("click", async (evt) => {
     evt.preventDefault();
+
+    if (evt.target.className === "text") {
+      const { id } = evt.target.closest("li");
+      onTitleClick(id);
+    }
 
     if (evt.target.className.includes("arrow__btn")) {
       const $ul = evt.target.closest("li").querySelector("ul");

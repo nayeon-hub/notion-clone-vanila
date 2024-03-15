@@ -1,6 +1,6 @@
 import DocumentNav from "./components/Navigation/DocNav.js";
 import PostEditPage from "./components/PostEditPage.js";
-// import { initRouter } from "./router.js";
+import { initRouter } from "./router.js";
 
 export default function App({ $target }) {
   const $sidebar = document.createElement("div");
@@ -35,30 +35,30 @@ export default function App({ $target }) {
   new DocumentNav({
     $target: $sidebar,
     initialState: [],
-    onClick: (id) => {
+    onTitleClick: (id) => {
       postEditPage.setState({
         ...postEditPage.state,
-        parentId: id,
+        postId: id,
       });
     },
   });
 
-  // this.route = () => {
-  //   $contentPage.innerHTML = "";
-  //   const { pathname } = window.location;
+  this.route = () => {
+    const { pathname } = window.location;
 
-  //   if (pathname.indexOf("/posts/") === 0) {
-  //     const [, , id] = pathname.split("/");
-  //     postEditPage.setState({
-  //       ...postEditPage.state,
-  //       postId: id,
-  //     });
-  //   } else if (pathname === "/") {
-  //     $contentPage.innerHTML = "";
-  //   }
-  // };
-  // this.route();
-  // initRouter(() => this.route());
+    if (pathname === "/") {
+      $contentPage.innerHTML = "";
+    } else if (pathname.indexOf("/posts/") === 0) {
+      const [, , id] = pathname.split("/");
+      // postEditPage.setState({
+      //   ...postEditPage.state,
+      //   postId: id,
+      // });
+    }
+  };
+
+  this.route();
+  initRouter(() => this.route());
 
   // window.addEventListener("popstate", () => this.route());
 }
