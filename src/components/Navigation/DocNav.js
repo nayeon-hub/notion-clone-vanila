@@ -3,7 +3,7 @@ import NavHeader from "./NavHeader.js";
 import Actions from "./Actions.js";
 import DocList from "./DocList.js";
 
-export default function DocumentNav({ $target, initialState, onTitleClick }) {
+export default function DocumentNav({ $target, initialState }) {
   // navigation
   const $nav = document.createElement("nav");
   $target.appendChild($nav);
@@ -23,7 +23,6 @@ export default function DocumentNav({ $target, initialState, onTitleClick }) {
   const docList = new DocList({
     $target: $nav,
     initialState,
-    onTitleClick,
     onValueChange: () => {
       fetchDocList();
     },

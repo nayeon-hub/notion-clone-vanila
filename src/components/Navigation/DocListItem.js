@@ -2,6 +2,8 @@
 export default function DocListItem({ $target, initialState }) {
   this.state = initialState;
 
+  let $li = null;
+
   this.setState = (nextState) => {
     this.state = nextState;
     this.render();
@@ -9,7 +11,7 @@ export default function DocListItem({ $target, initialState }) {
 
   this.template = () => {
     this.state.doc.map(({ id, title, documents }) => {
-      const $li = document.createElement("li");
+      $li = document.createElement("li");
       $li.id = id;
       $target.appendChild($li);
 

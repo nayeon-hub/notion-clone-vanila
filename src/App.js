@@ -24,9 +24,9 @@ export default function App({ $target }) {
       post: { title: "", content: "" },
       parentId: null,
     },
-    // onChangeTitle: (title) => {
-    //   documentNav.editDocItemTitle(title);
-    // },
+    onChangeTitle: (title) => {
+      // documentNav.editDocItemTitle(title);
+    },
     // onDeleteUndecidedItem: () => {
     //   documentNav.deleteUndecidedDocItem();
     // },
@@ -35,30 +35,23 @@ export default function App({ $target }) {
   new DocumentNav({
     $target: $sidebar,
     initialState: [],
-    onTitleClick: (id) => {
-      postEditPage.setState({
-        ...postEditPage.state,
-        postId: id,
-      });
-    },
   });
 
   this.route = () => {
     const { pathname } = window.location;
-
     if (pathname === "/") {
       $contentPage.innerHTML = "";
     } else if (pathname.indexOf("/posts/") === 0) {
       const [, , id] = pathname.split("/");
-      // postEditPage.setState({
-      //   ...postEditPage.state,
-      //   postId: id,
-      // });
+      postEditPage.setState({
+        ...postEditPage.state,
+        postId: id,
+      });
     }
   };
 
   this.route();
   initRouter(() => this.route());
 
-  // window.addEventListener("popstate", () => this.route());
+  window.addEventListener("popstate", () => this.route());
 }

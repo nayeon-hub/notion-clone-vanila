@@ -1,12 +1,8 @@
 import { readDocs, createDoc, deleteDoc } from "../../util/api.js";
 import DocListItem from "./DocListItem.js";
+import { push } from "../../router.js";
 
-export default function DocList({
-  $target,
-  initialState,
-  onTitleClick,
-  onValueChange,
-}) {
+export default function DocList({ $target, initialState, onValueChange }) {
   const $ul = document.createElement("ul");
   $target.appendChild($ul);
 
@@ -35,7 +31,7 @@ export default function DocList({
 
     if (evt.target.className === "text") {
       const { id } = evt.target.closest("li");
-      onTitleClick(id);
+      push(`/posts/${id}`);
     }
 
     if (evt.target.className.includes("arrow__btn")) {
