@@ -1,7 +1,62 @@
+@import "./reset.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+main {
+  min-height: 100vh;
+}
+
+.contentPage {
+  width: 100%;
+  background-color: #dedae3;
+}
+
 .title {
   display: flex;
 }
 
 .not__show {
   display: none;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  padding-top: 20px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: fit-content ;
+  padding: 10px;
+  background-color: lavender;
+}
+
+.title {
+  height: 26px;
+  display: flex;
+  align-items: center;
+}
+
+.text {
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.header {
+  height: 27px;
+  font-size: 17px;
+  font-weight: 600;
 }

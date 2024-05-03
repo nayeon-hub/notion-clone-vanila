@@ -5,16 +5,11 @@ import { initRouter } from "./router.js";
 export default function App({ $target }) {
   const $sidebar = document.createElement("div");
   $sidebar.className = "sidebar";
-  $sidebar.style.padding = "10px";
-  $sidebar.style.width = "26%";
-  $sidebar.style.backgroundColor = "lavender";
   $target.style.display = "flex";
   $target.appendChild($sidebar);
 
   const $contentPage = document.createElement("div");
   $contentPage.className = "contentPage";
-  $contentPage.style.width = "100%";
-  $contentPage.style.backgroundColor = "#DEDAE3";
   $target.appendChild($contentPage);
 
   const postEditPage = new PostEditPage({

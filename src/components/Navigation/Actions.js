@@ -7,6 +7,7 @@ export default function Actions({ $target, initialState }) {
 
   this.template = () => {
     const $actions = document.createElement("div");
+    $actions.className = "actions-box";
     $actions.innerHTML = `
       <div class="action">
         <span class="material-icons">add</span> 새로운 페이지

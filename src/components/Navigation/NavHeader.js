@@ -1,3 +1,5 @@
+import { push } from "../../router.js";
+
 export default function NavHeader({ $target, initialState }) {
   this.state = initialState;
 
@@ -9,13 +11,15 @@ export default function NavHeader({ $target, initialState }) {
     // header
     const $header = document.createElement("div");
     $header.className = "header";
-    $header.style.height = "27px";
-    $header.style.fontSize = "17px";
-    $header.style.fontWeight = "600";
     $header.innerHTML = `
       <div class="user-profile"></div>
       나연's Notion
     `;
+
+    $header.addEventListener("click", (evt) => {
+      evt.preventDefault();
+      push("/");
+    });
 
     $target.appendChild($header);
   };

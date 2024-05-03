@@ -16,15 +16,12 @@ export default function DocListItem({ $target, initialState }) {
       $target.appendChild($li);
 
       const $title = document.createElement("div");
-      $title.style.height = "26px";
-      $title.style.display = "flex";
-      $title.style.alignItems = "center";
       $title.className = "title";
       $title.innerHTML = ` 
           <span class="material-icons arrow__btn">play_arrow</span>
-          <span class="text" style="display : block; text-overflow : ellipsis; white-space : nowrap; width : ${
+          <span class="text" style="width : ${
             165 - (this.state.depth - 1) * 28
-          }px; overflow : hidden;">
+          }px;">
             ${title || "제목 없음"}
           </span>
           <div class="actions">
