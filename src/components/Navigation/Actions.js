@@ -1,3 +1,5 @@
+import { push } from "../../router.js";
+
 export default function Actions({ $target, initialState }) {
   this.state = initialState;
 
@@ -13,6 +15,11 @@ export default function Actions({ $target, initialState }) {
         <span class="material-icons">add</span> 새로운 페이지
       </div>
     `;
+
+    $actions.addEventListener("click", (evt) => {
+      evt.preventDefault();
+      push("/posts/new");
+    });
 
     $target.appendChild($actions);
   };
