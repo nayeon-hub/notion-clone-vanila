@@ -8,19 +8,14 @@ export default function PostEditor({
   onChangeTitle,
 }) {
   const $editor = document.createElement("div");
-  $editor.style.display = "flex";
-  $editor.style.flexDirection = "column";
-  $editor.style.alignItems = "center";
-  $editor.style.padding = "40px 0";
+  $editor.className = "editor";
 
   this.state = initialState;
 
   $editor.innerHTML = `
-        <div name="title" contentEditable="true" style="width : 600px; height: 58px; box-sizing : border-box; border : 2px solid white; border-radius : 4px; font-size : 32px; padding: 10px 7px;"></div>
-        <div name="content" contentEditable="true" style="width : 600px; height : 600px; box-sizing : border-box; padding : 8px; margin-top : 10px; border : 2px solid white; border-radius : 4px;"></div>
+        <div name="title" class="editor-title" contentEditable="true"></div>
+        <div name="content" class="editor-content"contentEditable="true"></div>
         <button>삭제</button>`;
-
-  $target.appendChild($editor);
 
   this.setState = (nextState) => {
     this.state = nextState;
@@ -30,6 +25,8 @@ export default function PostEditor({
   this.template = () => {};
 
   this.render = () => {
+    $target.appendChild($editor);
+
     const richContent = (this.state.content || "")
       .split("\n")
       .map((line) => {

@@ -10,9 +10,47 @@ main {
   min-height: 100vh;
 }
 
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 240px;
+  padding: 10px;
+  background-color: lavender;
+  height: 100vh;
+}
+
 .contentPage {
-  width: 100%;
   background-color: #dedae3;
+  width: 80%;
+  height: 100vh;
+  overflow: auto;
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+}
+
+.editor-title {
+  width: 100%;
+  height: 58px;
+  box-sizing: border-box;
+  border: 2px solid white;
+  border-radius: 4px;
+  font-size: 32px;
+  padding: 10px 7px;
+}
+
+.editor-content {
+  width: 100%;
+  height: 600px;
+  box-sizing: border-box;
+  padding: 8px;
+  margin-top: 10px;
+  border: 2px solid white;
+  border-radius: 4px;
 }
 
 .title {
@@ -30,16 +68,6 @@ main {
 
 .actions {
   display: flex;
-  padding-top: 20px;
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-width: fit-content ;
-  padding: 10px;
-  background-color: lavender;
 }
 
 .title {
@@ -59,4 +87,8 @@ main {
   height: 27px;
   font-size: 17px;
   font-weight: 600;
+}
+
+.actions-box {
+  padding-top: 20px;
 }

@@ -7,14 +7,15 @@ export default function PostEditPage({
   onChangeTitle,
   // onDeleteUndecidedItem,
 }) {
-  const $page = document.createElement("div");
-
   this.state = initialState;
+
+  const $postEditLayout = document.createElement("div");
+  $target.appendChild($postEditLayout);
 
   let timer = null;
 
   const postEditor = new PostEditor({
-    $target: $page,
+    $target: $postEditLayout,
     initialState: { title: "", content: "" },
     onEditing: async (post) => {
       if (timer !== null) {
@@ -99,7 +100,7 @@ export default function PostEditPage({
   };
 
   this.render = () => {
-    $target.appendChild($page);
+    $target.appendChild($postEditLayout);
   };
 
   this.render();
