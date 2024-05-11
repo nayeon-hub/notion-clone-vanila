@@ -20,6 +20,10 @@ main {
   height: 100vh;
 }
 
+.sidebar nav {
+  overflow: auto;
+}
+
 .contentPage {
   background-color: #dedae3;
   width: 80%;
@@ -61,19 +65,20 @@ main {
   display: none;
 }
 
-.action {
+.create-action {
   display: flex;
   align-items: center;
 }
 
-.actions {
+.item-actions {
   display: flex;
 }
 
-.title {
+.item-title {
   height: 26px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .text {
@@ -89,6 +94,29 @@ main {
   font-weight: 600;
 }
 
-.actions-box {
+.create-actions-box {
   padding-top: 20px;
+}
+
+.arrow__btn,
+.add__btn,
+.del__btn {
+  cursor: pointer;
+}
+
+.arrow__btn.noRotated {
+  transition: all ease 0.5s;
+}
+
+.noRotated:active {
+  transform: rotate(90deg);
+}
+
+.arrow__btn.rotated {
+  transform: rotate(90deg);
+  transition: all ease 0.5s;
+}
+
+.rotated:active {
+  transform: rotate(-90deg);
 }

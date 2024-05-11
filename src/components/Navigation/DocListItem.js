@@ -12,21 +12,22 @@ export default function DocListItem({ $target, initialState }) {
   this.template = () => {
     this.state.doc.map(({ id, title, documents }) => {
       $li = document.createElement("li");
+      $li.className = "list-item";
       $li.id = id;
       $target.appendChild($li);
 
       const $title = document.createElement("div");
-      $title.className = "title";
+      $title.className = "item-title";
       $title.innerHTML = ` 
-          <span class="material-icons arrow__btn">play_arrow</span>
+          <button class="material-icons arrow__btn noRotated">play_arrow</button>
           <span class="text" style="width : ${
             165 - (this.state.depth - 1) * 28
           }px;">
             ${title || "제목 없음"}
           </span>
-          <div class="actions">
-            <span class="material-icons add__btn">add</span>
-            <span class="material-icons del__btn">delete</span>
+          <div class="item-actions">
+            <button class="material-icons add__btn">add</button>
+            <button class="material-icons del__btn">delete</button>
           </div>`;
       $li.dataset.depth = this.state.depth;
       $li.appendChild($title);

@@ -35,16 +35,25 @@ export default function DocList({ $target, initialState, onValueChange }) {
     }
 
     if (evt.target.className.includes("arrow__btn")) {
-      const $ul = evt.target.closest("li").querySelector("ul");
+      const $li = evt.target.closest("li");
+      const $ul = $li.querySelector("ul");
 
       if ($ul) {
         $ul.className = $ul.className === "not__show" ? "" : "not__show";
       } else {
-        const noShowDiv = evt.target.closest(".title").nextSibling;
+        const noShowDiv = evt.target.closest(".item-title").nextSibling;
         noShowDiv.className =
           noShowDiv.className === "no-children not__show"
             ? ""
             : "no-children not__show";
+      }
+    }
+
+    if (evt.target.className.includes("arrow__btn")) {
+      if (evt.target.className.includes("rotated")) {
+        evt.target.className = "material-icons arrow__btn noRotated";
+      } else {
+        evt.target.className = "material-icons arrow__btn rotated";
       }
     }
 
@@ -62,7 +71,7 @@ export default function DocList({ $target, initialState, onValueChange }) {
       let $childUlNode = parentNode.querySelector("ul");
 
       if (!$childUlNode) {
-        const noShowDiv = evt.target.closest(".title").nextSibling;
+        const noShowDiv = evt.target.closest(".item-title").nextSibling;
         noShowDiv.className = "no-children not__show";
 
         const $ul = document.createElement("ul");
