@@ -33,6 +33,14 @@ export default function DocumentNav({ $target, initialState }) {
     initialState,
   });
 
+  this.editDocItemTitle = (title) => {
+    const { pathname } = window.location;
+    const [, , id] = pathname.split("/");
+    const $navLi = document.getElementById(`${id}`);
+    const $title = $navLi.querySelector(".item-title").querySelector(".text");
+    $title.innerHTML = title;
+  };
+
   this.template = () => {};
 
   const fetchDocList = async () => {

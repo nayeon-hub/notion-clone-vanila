@@ -5,7 +5,7 @@ export default function PostEditPage({
   $target,
   initialState,
   onChangeTitle,
-  // onDeleteUndecidedItem,
+  onDeleteUndecidedItem,
 }) {
   this.state = initialState;
 

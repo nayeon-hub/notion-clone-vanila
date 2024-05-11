@@ -12,6 +12,11 @@ export default function App({ $target }) {
   $contentPage.className = "contentPage";
   $target.appendChild($contentPage);
 
+  const documentNav = new DocumentNav({
+    $target: $sidebar,
+    initialState: [],
+  });
+
   const postEditPage = new PostEditPage({
     $target: $contentPage,
     initialState: {
@@ -20,16 +25,11 @@ export default function App({ $target }) {
       parentId: null,
     },
     onChangeTitle: (title) => {
-      // documentNav.editDocItemTitle(title);
+      documentNav.editDocItemTitle(title);
     },
-    // onDeleteUndecidedItem: () => {
-    //   documentNav.deleteUndecidedDocItem();
-    // },
-  });
-
-  new DocumentNav({
-    $target: $sidebar,
-    initialState: [],
+    onDeleteUndecidedItem: () => {
+      // documentNav.deleteUndecidedDocItem();
+    },
   });
 
   this.route = () => {
