@@ -68,6 +68,7 @@ main {
 .create-action {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .item-actions {

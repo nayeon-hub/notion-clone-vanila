@@ -13,6 +13,7 @@ export default function DocumentNav({ $target, initialState }) {
   this.setState = (nextState) => {
     this.state = nextState;
     docList.setState(this.state);
+    actions.setState(this.state);
   };
 
   new NavHeader({
@@ -28,7 +29,7 @@ export default function DocumentNav({ $target, initialState }) {
     },
   });
 
-  new Actions({
+  const actions = new Actions({
     $target,
     initialState,
   });

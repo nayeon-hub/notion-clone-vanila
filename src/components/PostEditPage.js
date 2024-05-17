@@ -26,10 +26,10 @@ export default function PostEditPage({
         const isNew = this.state.postId === "new";
         const { title, content } = post;
         if (isNew) {
-          if (!title && !content) {
-            onDeleteUndecidedItem();
-            return;
-          }
+          // if (!title && !content) {
+          //   onDeleteUndecidedItem();
+          //   return;
+          // }
 
           const createdPost = await request("/", {
             method: "POST",
@@ -49,8 +49,6 @@ export default function PostEditPage({
 
           history.replaceState(null, null, `/posts/${createdPost.id}`);
 
-          onChangeTitle(title);
-
           this.setState({
             ...this.state,
             postId: createdPost.id.toString(),
@@ -63,6 +61,7 @@ export default function PostEditPage({
               content,
             }),
           });
+
           this.setState({
             ...this.state,
             post: editedPost,

@@ -61,12 +61,15 @@ export default function DocList({ $target, initialState, onValueChange }) {
       const parentNode = evt.target.closest("li");
       const parentDepth = parentNode.dataset.depth;
       const parentId = parentNode.id;
+
       const doc = await createDoc("/", {
         body: JSON.stringify({
           title: "",
           parent: parentId,
         }),
       });
+
+      push(`/posts/${doc.id}`);
 
       let $childUlNode = parentNode.querySelector("ul");
 
