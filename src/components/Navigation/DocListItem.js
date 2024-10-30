@@ -10,7 +10,6 @@ export default function DocListItem({ $target, initialState }) {
   };
 
   this.template = () => {
-    // if (this.state.depth === 1)
     $target.innerHTML = "";
 
     this.state.doc.map(({ id, title, documents }) => {
