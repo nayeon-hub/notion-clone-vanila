@@ -2,6 +2,7 @@ import { request } from "../../util/api.js";
 import NavHeader from "./NavHeader.js";
 import Actions from "./Actions.js";
 import DocList from "./DocList.js";
+import { getDocuments } from "../../util/clientServer.js";
 
 export default function DocumentNav({ $target, initialState }) {
   // navigation
@@ -12,7 +13,10 @@ export default function DocumentNav({ $target, initialState }) {
 
   this.setState = (nextState) => {
     this.state = nextState;
-    docList.setState(this.state);
+    docList.setState({
+      doc: this.state,
+      depth: 0,
+    });
     actions.setState(this.state);
   };
 
@@ -23,7 +27,10 @@ export default function DocumentNav({ $target, initialState }) {
 
   const docList = new DocList({
     $target: $nav,
-    initialState,
+    initialState: {
+      doc: this.state,
+      depth: 0,
+    },
     onValueChange: () => {
       fetchDocList();
     },
@@ -32,6 +39,10 @@ export default function DocumentNav({ $target, initialState }) {
   const actions = new Actions({
     $target,
     initialState,
+    onCreateDoc: async (nextState) => {
+      this.state = [...this.state, nextState];
+      this.setState(this.state);
+    },
   });
 
   this.editDocItemTitle = (title) => {
@@ -45,7 +56,7 @@ export default function DocumentNav({ $target, initialState }) {
   this.template = () => {};
 
   const fetchDocList = async () => {
-    let docList = await request("/");
+    let docList = await getDocuments();
     this.setState(docList);
   };
 
