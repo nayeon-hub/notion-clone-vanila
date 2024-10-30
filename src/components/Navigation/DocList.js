@@ -2,7 +2,12 @@ import { readDocs, createDoc, deleteDoc } from "../../util/api.js";
 import DocListItem from "./DocListItem.js";
 import { push } from "../../router.js";
 
-export default function DocList({ $target, initialState, onValueChange }) {
+export default function DocList({
+  $target,
+  initialState,
+  onDocListItemClick,
+  onDocList,
+}) {
   const $ul = document.createElement("ul");
   $target.appendChild($ul);
 
@@ -12,7 +17,7 @@ export default function DocList({ $target, initialState, onValueChange }) {
     this.state = nextState;
 
     docListItem.setState({
-      doc: this.state.doc,
+      doc: this.state,
       depth: 1,
     });
   };
@@ -20,7 +25,7 @@ export default function DocList({ $target, initialState, onValueChange }) {
   const docListItem = new DocListItem({
     $target: $ul,
     initialState: {
-      doc: this.state.doc,
+      doc: this.state,
       depth: 1,
     },
   });
@@ -32,6 +37,7 @@ export default function DocList({ $target, initialState, onValueChange }) {
 
     if (evt.target.className === "text") {
       const { id } = evt.target.closest("li");
+      onDocListItemClick(id);
       push(`/posts/${id}`);
     }
 
