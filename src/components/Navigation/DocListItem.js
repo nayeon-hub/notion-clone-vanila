@@ -10,6 +10,9 @@ export default function DocListItem({ $target, initialState }) {
   };
 
   this.template = () => {
+    // if (this.state.depth === 1)
+    $target.innerHTML = "";
+
     this.state.doc.map(({ id, title, documents }) => {
       $li = document.createElement("li");
       $li.className = "list-item";
@@ -41,7 +44,7 @@ export default function DocListItem({ $target, initialState }) {
 
       $li.appendChild($noChildren);
 
-      if (documents.length > 0) {
+      if (documents && documents.length > 0) {
         const $ul = document.createElement("ul");
         $li.appendChild($ul);
         $ul.className = "not__show";

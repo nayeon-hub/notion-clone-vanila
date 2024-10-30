@@ -10,8 +10,9 @@ export default function DocList({ $target, initialState, onValueChange }) {
 
   this.setState = (nextState) => {
     this.state = nextState;
+
     docListItem.setState({
-      doc: this.state,
+      doc: this.state.doc,
       depth: 1,
     });
   };
@@ -19,7 +20,7 @@ export default function DocList({ $target, initialState, onValueChange }) {
   const docListItem = new DocListItem({
     $target: $ul,
     initialState: {
-      doc: this.state,
+      doc: this.state.doc,
       depth: 1,
     },
   });
