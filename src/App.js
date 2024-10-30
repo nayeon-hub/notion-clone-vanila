@@ -1,6 +1,7 @@
 import DocumentNav from "./components/Navigation/DocNav.js";
 import PostEditPage from "./components/PostEditPage.js";
-import { initRouter } from "./router.js";
+import { getDocuments } from "./util/clientServer.js";
+import { getDocument } from "./util/clientServer.js";
 
 export default function App({ $target }) {
   const $sidebar = document.createElement("div");
@@ -12,41 +13,68 @@ export default function App({ $target }) {
   $contentPage.className = "contentPage";
   $target.appendChild($contentPage);
 
+  this.state = {
+    docList: [],
+  };
+
+  this.setState = (nextState) => {
+    this.state = nextState;
+
+    documentNav.setState(this.state.docList);
+
+    this.render();
+  };
+
   const documentNav = new DocumentNav({
     $target: $sidebar,
-    initialState: [],
+    initialState: this.state.docList,
+    onDocClick: async (id) => {
+      await fetchSelectedDoc(id);
+    },
   });
 
   const postEditPage = new PostEditPage({
     $target: $contentPage,
     initialState: {
-      postId: "new",
-      post: { title: "", content: "" },
-      parentId: null,
+      selectedId: null,
+      selectedData: {},
     },
     onChangeTitle: (title) => {
       documentNav.editDocItemTitle(title);
     },
     onDeleteUndecidedItem: () => {
-      // documentNav.deleteUndecidedDocItem();
+      documentNav.deleteUndecidedDocItem();
     },
   });
 
-  this.route = () => {
-    const { pathname } = window.location;
-    if (pathname === "/") {
-      $contentPage.innerHTML = "";
-    } else if (pathname.indexOf("/posts/") === 0) {
-      const [, , id] = pathname.split("/");
+  const fetchSelectedDoc = async (id) => {
+    if (id) {
+      const data = await getDocument(id);
       postEditPage.setState({
         ...postEditPage.state,
-        postId: id,
+        selectedId: data.id,
+        selectedData: data[0],
       });
     }
   };
 
-  this.route();
-  initRouter(() => this.route());
+  const fetchAllData = async () => {
+    const documents = await getDocuments();
 
-  window.addEventListener("popstate", () => this.route());
+    this.setState({
+      ...this.state,
+      docList: documents,
+    });
+  };
+
+  this.render = () => {};
+
+  const init = () => {
+    fetchAllData();
+  };
+
+  init();
+  // this.route();
+  // initRouter(() => this.route());
+  // window.addEventListener("popstate", () => this.route());
 }

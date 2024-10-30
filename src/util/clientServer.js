@@ -18,16 +18,9 @@ function dfs(visited, data, idx, currentDocuments) {
   }
 }
 
-export const getData = async () => {
+export const getDocuments = async () => {
   try {
-    let { data: document, error } = await client
-      .from("documents")
-      //   .insert({
-      //   parent: 26,
-      //   documents: [],
-      //   title: "최상위다큐먼트 예시",
-      // });
-      .select("*");
+    let { data: document } = await client.from("documents").select("*");
 
     const data = await document;
     const madeDocuments = [];
@@ -42,6 +35,18 @@ export const getData = async () => {
       }
     }
     return madeDocuments;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getDocument = async (id) => {
+  try {
+    let { data: document } = await client
+      .from("documents")
+      .select()
+      .eq("id", id.toString());
+    return document;
   } catch (err) {
     console.log(err);
   }
