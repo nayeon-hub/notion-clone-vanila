@@ -51,3 +51,17 @@ export const getDocument = async (id) => {
     console.log(err);
   }
 };
+
+export const postEditDocTitle = async (id, content) => {
+  try {
+    let { data: document } = await client
+      .from("documents")
+      .update({ title: content })
+      .eq("id", id.toString())
+      .select();
+
+    return document;
+  } catch (err) {
+    console.log(err);
+  }
+};
