@@ -55,7 +55,7 @@ export default function PostEditor({
       title: e.target.innerHTML,
     };
 
-    onChangeTitle(e.target.innerHTML);
+    onChangeTitle(nextState.title);
     onEditing(nextState);
   });
 

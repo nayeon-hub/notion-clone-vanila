@@ -20,15 +20,19 @@ export default function App({ $target }) {
   this.setState = (nextState) => {
     this.state = nextState;
 
-    documentNav.setState(this.state.docList);
+    documentNav.setState({
+      docList: this.state.docList,
+    });
 
     this.render();
   };
 
   const documentNav = new DocumentNav({
     $target: $sidebar,
-    initialState: this.state.docList,
-    onDocClick: async (id) => {
+    initialState: {
+      docList: this.state.docList,
+    },
+    onDocListItemSelect: async (id) => {
       await fetchSelectedDoc(id);
     },
   });
@@ -52,7 +56,7 @@ export default function App({ $target }) {
       const data = await getDocument(id);
       postEditPage.setState({
         ...postEditPage.state,
-        selectedId: data.id,
+        selectedId: id,
         selectedData: data[0],
       });
     }

@@ -1,11 +1,11 @@
 import { readDocs, createDoc, deleteDoc } from "../../util/api.js";
 import DocListItem from "./DocListItem.js";
-import { push } from "../../router.js";
+// import { push } from "../../router.js";
 
 export default function DocList({
   $target,
   initialState,
-  onDocListItemClick,
+  onDocListItemSelect,
   onDocList,
 }) {
   const $ul = document.createElement("ul");
@@ -17,7 +17,7 @@ export default function DocList({
     this.state = nextState;
 
     docListItem.setState({
-      doc: this.state,
+      docs: this.state.docList,
       depth: 1,
     });
   };
@@ -25,7 +25,7 @@ export default function DocList({
   const docListItem = new DocListItem({
     $target: $ul,
     initialState: {
-      doc: this.state,
+      docs: this.state.docList,
       depth: 1,
     },
   });
@@ -37,8 +37,8 @@ export default function DocList({
 
     if (evt.target.className === "text") {
       const { id } = evt.target.closest("li");
-      onDocListItemClick(id);
-      push(`/posts/${id}`);
+      onDocListItemSelect(id);
+      history.pushState(null, null, `/posts/${id}`);
     }
 
     if (evt.target.className.includes("arrow__btn")) {

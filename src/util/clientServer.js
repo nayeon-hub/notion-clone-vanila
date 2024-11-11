@@ -20,7 +20,10 @@ function dfs(visited, data, idx, currentDocuments) {
 
 export const getDocuments = async () => {
   try {
-    let { data: document } = await client.from("documents").select("*");
+    let { data: document } = await client
+      .from("documents")
+      .select("*")
+      .order("createdAt", { ascending: true });
 
     const data = await document;
     const madeDocuments = [];
@@ -52,13 +55,12 @@ export const getDocument = async (id) => {
   }
 };
 
-export const postEditDocTitle = async (id, content) => {
+export const postEditDoc = async (id, title, content) => {
   try {
     let { data: document } = await client
       .from("documents")
-      .update({ title: content })
-      .eq("id", id.toString())
-      .select();
+      .update({ title: title, content: content })
+      .eq("id", id.toString());
 
     return document;
   } catch (err) {

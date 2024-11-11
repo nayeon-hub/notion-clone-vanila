@@ -12,7 +12,7 @@ export default function DocListItem({ $target, initialState }) {
   this.template = () => {
     $target.innerHTML = "";
 
-    this.state.doc.map(({ id, title, documents }) => {
+    this.state.docs.map(({ id, title, documents }) => {
       $li = document.createElement("li");
       $li.className = "list-item";
       $li.id = id;
@@ -52,7 +52,7 @@ export default function DocListItem({ $target, initialState }) {
         new DocListItem({
           $target: $ul,
           initialState: {
-            doc: documents,
+            docs: documents,
             depth: this.state.depth + 1,
           },
         });

@@ -1,4 +1,6 @@
 import PostEditor from "./PostEditor.js";
+import { postEditDoc } from "../util/clientServer.js";
+import { getDocument } from "../util/clientServer.js";
 
 export default function PostEditPage({
   $target,
@@ -26,7 +28,9 @@ export default function PostEditPage({
   const postEditor = new PostEditor({
     $target: $postEditLayout,
     initialState: { title: "", content: "" },
-    onEditing: async () => {},
+    onEditing: async ({ title, content }) => {
+      postEditDoc(this.state.selectedId, title, content);
+    },
     onChangeTitle,
   });
 
