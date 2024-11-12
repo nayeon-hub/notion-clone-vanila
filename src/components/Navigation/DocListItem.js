@@ -1,4 +1,5 @@
-// test
+import { getItem } from "../../util/storage.js";
+
 export default function DocListItem({ $target, initialState }) {
   this.state = initialState;
 
@@ -18,15 +19,21 @@ export default function DocListItem({ $target, initialState }) {
       $li.id = id;
       $target.appendChild($li);
 
+      const listStyle = getItem("listStyle", {});
+
       const $title = document.createElement("div");
       $title.className = "item-title";
       $title.innerHTML = ` 
-          <button class="material-icons arrow__btn noRotated">play_arrow</button>
-          <span class="text" style="width : ${
-            165 - (this.state.depth - 1) * 28
-          }px;">
-            ${title || "제목 없음"}
-          </span>
+          <div class="item-text" style="display : flex;">
+            <button class="material-icons arrow__btn ${
+              listStyle[id] ? "rotated" : "noRotated"
+            }">play_arrow</button>
+            <span class="text" style="width : ${
+              165 - (this.state.depth - 1) * 28
+            }px;">
+              ${title || "제목 없음"}
+            </span>
+          </div>
           <div class="item-actions">
             <button class="material-icons add__btn">add</button>
             <button class="material-icons del__btn">delete</button>
@@ -35,7 +42,10 @@ export default function DocListItem({ $target, initialState }) {
       $li.appendChild($title);
 
       const $noChildren = document.createElement("div");
-      $noChildren.className = "no-children not__show";
+      $noChildren.className =
+        documents.length === 0 && listStyle[id]
+          ? "no-child"
+          : "no-child not__show";
       $noChildren.innerText = "하위 메세지 없음";
       $noChildren.style.paddingLeft = "28px";
       $noChildren.style.height = "26px";
@@ -46,7 +56,7 @@ export default function DocListItem({ $target, initialState }) {
       if (documents && documents.length > 0) {
         const $ul = document.createElement("ul");
         $li.appendChild($ul);
-        $ul.className = "not__show";
+        $ul.className = listStyle[id] ? "" : "not__show";
         $ul.style.paddingLeft = "28px";
 
         new DocListItem({

@@ -1,7 +1,7 @@
 import DocumentNav from "./components/Navigation/DocNav.js";
 import PostEditPage from "./components/PostEditPage.js";
 import { getDocuments } from "./util/clientServer.js";
-import { getDocument } from "./util/clientServer.js";
+import { setItem } from "./util/storage.js";
 
 export default function App({ $target }) {
   const $sidebar = document.createElement("div");
@@ -15,6 +15,8 @@ export default function App({ $target }) {
 
   this.state = {
     docList: [],
+    selectedId: null,
+    parentId: null,
   };
 
   this.setState = (nextState) => {
@@ -22,6 +24,12 @@ export default function App({ $target }) {
 
     documentNav.setState({
       docList: this.state.docList,
+      selectedId: this.state.selectedId,
+    });
+
+    postEditPage.setState({
+      ...postEditPage.state,
+      selectedId: this.state.selectedId,
     });
 
     this.render();
@@ -31,16 +39,22 @@ export default function App({ $target }) {
     $target: $sidebar,
     initialState: {
       docList: this.state.docList,
+      selectedId: this.state.selectedId,
     },
-    onDocListItemSelect: async (id) => {
-      await fetchSelectedDoc(id);
+    onDocListItemSelect: async (selectedId) => {
+      const documents = await getDocuments();
+      this.setState({
+        ...this.state,
+        selectedId,
+        docList: documents,
+      });
     },
   });
 
   const postEditPage = new PostEditPage({
     $target: $contentPage,
     initialState: {
-      selectedId: null,
+      selectedId: this.state.selectedId,
       selectedData: {},
     },
     onChangeTitle: (title) => {
@@ -50,17 +64,6 @@ export default function App({ $target }) {
       documentNav.deleteUndecidedDocItem();
     },
   });
-
-  const fetchSelectedDoc = async (id) => {
-    if (id) {
-      const data = await getDocument(id);
-      postEditPage.setState({
-        ...postEditPage.state,
-        selectedId: id,
-        selectedData: data[0],
-      });
-    }
-  };
 
   const fetchAllData = async () => {
     const documents = await getDocuments();
@@ -73,8 +76,8 @@ export default function App({ $target }) {
 
   this.render = () => {};
 
-  const init = () => {
-    fetchAllData();
+  const init = async () => {
+    await fetchAllData();
   };
 
   init();

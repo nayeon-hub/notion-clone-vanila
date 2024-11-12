@@ -13,23 +13,46 @@ export default function PostEditPage({
 
   this.state = initialState;
 
+  let timer = null;
+
   this.setState = async (nextState) => {
     this.state = nextState;
+    console.log(this.state.selectedId);
 
-    postEditor.setState({
-      ...postEditor.state,
-      title: this.state.selectedData.title,
-      content: this.state.selectedData.content,
-    });
+    if (this.state.selectedId) {
+      const data = await getDocument(this.state.selectedId);
+      const { title, content } = data[0];
+
+      postEditor.setState({
+        ...postEditor.state,
+        title,
+        content,
+      });
+    }
 
     this.render();
   };
 
   const postEditor = new PostEditor({
     $target: $postEditLayout,
-    initialState: { title: "", content: "" },
+    initialState: {
+      title: this.state.selectedData.title,
+      content: this.state.selectedData.content,
+    },
     onEditing: async ({ title, content }) => {
-      postEditDoc(this.state.selectedId, title, content);
+      if (timer !== null) {
+        clearTimeout(timer);
+      }
+      timer = setTimeout(async () => {
+        const isNew = this.state.selectedId === "new";
+
+        if (isNew) {
+          const doc = await postEditDoc(this.state.selectedId, title, content);
+          history.replaceState(null, null, `/post/${doc.id}`);
+        } else {
+          await postEditDoc(this.state.selectedId, title, content);
+        }
+      }, 2000);
     },
     onChangeTitle,
   });

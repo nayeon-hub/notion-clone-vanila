@@ -31,6 +31,7 @@ export default function DocumentNav({
     $target: $nav,
     initialState: {
       docList: this.state.docList,
+      selectedId: this.state.selectedId,
     },
     onDocListItemSelect,
     onValueChange: () => {
