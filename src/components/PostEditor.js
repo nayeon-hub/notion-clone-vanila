@@ -15,8 +15,8 @@ export default function PostEditor({
   this.state = initialState;
 
   $editor.innerHTML = `
-        <div name="title" class="editor-title" contentEditable="true"></div>
-        <div name="content" class="editor-content"contentEditable="true"></div>
+        <div name="title" class="editor-title" contentEditable="true" placeholder="새페이지"></div>
+        <div name="content" class="editor-content"contentEditable="true" placeholder="나만의 멋진 글을 작성해보세요!"></div>
         <button>삭제</button>`;
 
   this.setState = (nextState) => {
@@ -44,8 +44,7 @@ export default function PostEditor({
       })
       .join("<br>");
 
-    $editor.querySelector("[name=title]").innerHTML =
-      title === "" ? "제목없음" : title;
+    $editor.querySelector("[name=title]").innerHTML = title;
     $editor.querySelector("[name=content]").innerHTML = richContent;
     (content || "").replace(/\n/g, "<br>");
   };
@@ -56,6 +55,7 @@ export default function PostEditor({
     const nextState = {
       ...this.state,
       post: {
+        ...this.state.post,
         title: e.target.innerHTML,
       },
     };
@@ -65,6 +65,7 @@ export default function PostEditor({
   });
 
   $editor.querySelector("[name=content]").addEventListener("keyup", (e) => {
+    console.log("content keyup");
     let nextState = {
       ...this.state,
       post: {
@@ -80,6 +81,7 @@ export default function PostEditor({
     const nextState = {
       ...this.state,
       post: {
+        ...this.state.post,
         title: e.target.innerHTML,
       },
     };
@@ -88,6 +90,7 @@ export default function PostEditor({
   });
 
   $editor.querySelector("[name=content]").addEventListener("blur", (e) => {
+    console.log("content blur");
     const nextState = {
       ...this.state,
       post: {
