@@ -1,7 +1,11 @@
 import { push } from "../../router.js";
-import { createDoc } from "../../util/api.js";
+import { postCreateDoc } from "../../util/clientServer.js";
 
-export default function Actions({ $target, initialState, onCreateDoc }) {
+export default function Actions({
+  $target,
+  initialState,
+  onDocListItemSelect,
+}) {
   this.state = initialState;
 
   this.setState = (nextState) => {
@@ -31,14 +35,9 @@ export default function Actions({ $target, initialState, onCreateDoc }) {
 
   const $createAction = $target.querySelector(".create-action");
 
-  $createAction.addEventListener("click", async (evt) => {
-    const doc = await createDoc("/", {
-      body: JSON.stringify({
-        title: "",
-        parent: null,
-      }),
-    });
-    onCreateDoc(doc);
+  $createAction.addEventListener("click", async () => {
+    const doc = await postCreateDoc(null);
     push(`/posts/${doc.id}`);
+    onDocListItemSelect(`${doc.id}`);
   });
 }

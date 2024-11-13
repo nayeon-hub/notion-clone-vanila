@@ -36,18 +36,12 @@ export default function DocumentNav({
       selectedId: this.state.selectedId,
     },
     onDocListItemSelect,
-    onValueChange: () => {
-      // fetchDocList();
-    },
   });
 
   const actions = new Actions({
     $target,
     initialState,
-    onCreateDoc: async (nextState) => {
-      // this.state.docList = [...this.state.docList, nextState];
-      // this.setState(this.state.docList);
-    },
+    onDocListItemSelect,
   });
 
   this.editDocItemTitle = (title) => {

@@ -7,7 +7,6 @@ export default function DocList({
   $target,
   initialState,
   onDocListItemSelect,
-  onDocList,
 }) {
   const $ul = document.createElement("ul");
   $target.appendChild($ul);
@@ -98,7 +97,11 @@ export default function DocList({
         let clickedUlChildNodes = clickedUlNode.childNodes;
 
         const parentNode = clickedUlNode.closest(".list-item");
-        const { id: parentId } = parentNode;
+        let parentId = null;
+
+        if (parentNode) {
+          parentId = parentNode.id;
+        }
 
         const clickedLiNode = evt.target.closest("li");
         const currentId = clickedLiNode.id;
