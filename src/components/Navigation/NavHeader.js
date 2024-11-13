@@ -8,12 +8,12 @@ export default function NavHeader({ $target, initialState }) {
   };
 
   this.template = () => {
-    // header
     const $header = document.createElement("div");
     $header.className = "header";
     $header.innerHTML = `
       <div class="user-profile"></div>
-      나연's Notion
+      <span>🧙🏻‍♀️</span>
+      나연의 Notion
     `;
 
     $header.addEventListener("click", (evt) => {
