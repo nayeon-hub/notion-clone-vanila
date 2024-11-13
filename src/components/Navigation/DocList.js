@@ -1,5 +1,4 @@
-import { deleteDoc } from "../../util/api.js";
-import { postCreateDoc } from "../../util/clientServer.js";
+import { postCreateDoc, deleteDoc } from "../../util/clientServer.js";
 import DocListItem from "./DocListItem.js";
 import { push } from "../../router.js";
 import { setItem, getItem } from "../../util/storage.js";
@@ -41,7 +40,7 @@ export default function DocList({
     if (evt.target.className === "text") {
       const { id } = evt.target.closest("li");
       onDocListItemSelect(id);
-      history.pushState(null, null, `/posts/${id}`);
+      push(`/posts/${id}`);
     }
 
     if (evt.target.className.includes("arrow__btn")) {
@@ -77,68 +76,49 @@ export default function DocList({
 
     if (evt.target.className.includes("add__btn")) {
       const parentNode = evt.target.closest("li");
-      const parentDepth = parentNode.dataset.depth;
       const { id: parentId } = parentNode;
+      const parentBtn = parentNode
+        .querySelector(".item-title")
+        .querySelector("button");
 
       const doc = await postCreateDoc(parentId);
 
-      history.replaceState(null, null, `/post/${doc.id}`);
+      onDocListItemSelect(`${doc.id}`);
+      push(`/posts/${doc.id}`);
 
-      let $childUlNode = parentNode.querySelector("ul");
-
-      const listStyle = getItem("listStyle", {});
-      listStyle[id] = false;
+      listStyle[doc.parentId] = true;
+      listStyle[doc.id] = false;
       setItem("listStyle", listStyle);
-
-      if (!$childUlNode) {
-        const noShowDiv = evt.target.closest(".item-title").nextSibling;
-        noShowDiv.className = "no-children not__show";
-
-        const $ul = document.createElement("ul");
-        $ul.style.paddingLeft = "28px";
-        parentNode.appendChild($ul);
-        $childUlNode = parentNode.querySelector("ul");
-      } else {
-        const $li = document.createElement("li");
-        $li.className = "list-item";
-        $li.id = doc.id;
-        $target.appendChild($li);
-        const $title = document.createElement("div");
-        $title.className = "item-title";
-        $title.innerHTML = `
-            <div class="item-text" style="display : flex;">
-              <button class="material-icons arrow__btn noRotated">play_arrow</button>
-              <span class="text" style="width : ${
-                165 - parseInt(parentDepth) * 28
-              }px;">
-                제목 없음
-              </span>
-            </div>
-            <div class="item-actions">
-              <button class="material-icons add__btn">add</button>
-              <button class="material-icons del__btn">delete</button>
-            </div>`;
-        $li.dataset.depth = parseInt(parentDepth) + 1;
-        $li.appendChild($title);
-        $childUlNode.appendChild($li);
-      }
-
-      $childUlNode.className = "";
+      parentBtn.className = "material-icons arrow__btn rotated";
     }
 
     if (evt.target.className.includes("del__btn")) {
-      let $clickedUl = evt.target.closest("ul");
-      let clickedUlChildNodes = $clickedUl.childNodes;
+      if (confirm("해당 게시글을 삭제하시겠습니까?")) {
+        let clickedUlNode = evt.target.closest("ul");
+        let clickedUlChildNodes = clickedUlNode.childNodes;
 
-      let $clickedLi = evt.target.closest("li");
-      const currentId = $clickedLi.id;
-      await deleteDoc(`/${currentId}`);
-      $clickedLi.remove();
+        const parentNode = clickedUlNode.closest(".list-item");
+        const { id: parentId } = parentNode;
 
-      if (clickedUlChildNodes.length === 0) {
-        const noShowDiv = $clickedUl.previousSibling;
-        noShowDiv.className = "";
-        $clickedUl.remove();
+        const clickedLiNode = evt.target.closest("li");
+        const currentId = clickedLiNode.id;
+        await deleteDoc(currentId);
+
+        if (currentId === this.state.selectedId) {
+          push(`/posts/${parentId}`);
+        }
+
+        if (clickedUlChildNodes.length === 1) {
+          const noChildDivNode = clickedUlNode.previousSibling;
+          noChildDivNode.className = "no-child";
+
+          clickedUlNode.remove();
+
+          delete listStyle[currentId];
+          setItem("listStyle", listStyle);
+        } else {
+          clickedLiNode.remove();
+        }
       }
     }
   });

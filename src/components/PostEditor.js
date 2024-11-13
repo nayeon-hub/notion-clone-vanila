@@ -1,11 +1,13 @@
 import { push } from "../router.js";
-import { request } from "../util/api.js";
+import { deleteDoc } from "../util/clientServer.js";
+import { getItem, setItem } from "../util/storage.js";
 
 export default function PostEditor({
   $target,
   initialState,
   onEditing,
   onChangeTitle,
+  onDeleteItem,
 }) {
   const $editor = document.createElement("div");
   $editor.className = "editor";
@@ -26,8 +28,9 @@ export default function PostEditor({
 
   this.render = () => {
     $target.appendChild($editor);
+    const { content, title } = this.state.post;
 
-    const richContent = (this.state.content || "")
+    const richContent = (content || "")
       .split("\n")
       .map((line) => {
         if (line.indexOf("# ") === 0) {
@@ -42,9 +45,9 @@ export default function PostEditor({
       .join("<br>");
 
     $editor.querySelector("[name=title]").innerHTML =
-      this.state.title === "" ? "제목없음" : this.state.title;
+      title === "" ? "제목없음" : title;
     $editor.querySelector("[name=content]").innerHTML = richContent;
-    (this.state.content || "").replace(/\n/g, "<br>");
+    (content || "").replace(/\n/g, "<br>");
   };
 
   this.render();
@@ -52,18 +55,22 @@ export default function PostEditor({
   $editor.querySelector("[name=title]").addEventListener("keyup", (e) => {
     const nextState = {
       ...this.state,
-      title: e.target.innerHTML,
+      post: {
+        title: e.target.innerHTML,
+      },
     };
 
-    onChangeTitle(nextState.title);
+    onChangeTitle(nextState.post.title);
     onEditing(nextState);
   });
 
   $editor.querySelector("[name=content]").addEventListener("keyup", (e) => {
     let nextState = {
       ...this.state,
-      title: $editor.querySelector("[name=title]").innerHTML,
-      content: e.target.innerText,
+      post: {
+        title: $editor.querySelector("[name=title]").innerHTML,
+        content: e.target.innerText,
+      },
     };
 
     onEditing(nextState);
@@ -72,7 +79,9 @@ export default function PostEditor({
   $editor.querySelector("[name=title]").addEventListener("blur", (e) => {
     const nextState = {
       ...this.state,
-      title: e.target.innerHTML,
+      post: {
+        title: e.target.innerHTML,
+      },
     };
 
     this.setState(nextState);
@@ -81,8 +90,10 @@ export default function PostEditor({
   $editor.querySelector("[name=content]").addEventListener("blur", (e) => {
     const nextState = {
       ...this.state,
-      title: $editor.querySelector("[name=title]").innerHTML,
-      content: e.target.innerText,
+      post: {
+        title: $editor.querySelector("[name=title]").innerHTML,
+        content: e.target.innerText,
+      },
     };
 
     this.setState(nextState);
@@ -91,12 +102,19 @@ export default function PostEditor({
   $editor.querySelector("button").addEventListener("click", async () => {
     const { pathname } = window.location;
     const [, , id] = pathname.split("/");
+    const {
+      post: { parentId },
+    } = this.state;
+
+    const listStyle = getItem("listStyle", {});
+    delete listStyle[id];
+    setItem("listStyle", listStyle);
 
     if (confirm("해당 게시글을 삭제하시겠습니까?")) {
-      await request(`/${id}`, {
-        method: "DELETE",
-      });
-      push("/");
+      await deleteDoc(id);
+      onDeleteItem(`${parentId}`);
+      if (parentId) push(`/posts/${parentId}`);
+      else push("/");
     }
   });
 }

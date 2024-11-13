@@ -41,17 +41,20 @@ export default function DocListItem({ $target, initialState }) {
       $li.dataset.depth = this.state.depth;
       $li.appendChild($title);
 
-      const $noChildren = document.createElement("div");
-      $noChildren.className =
-        documents.length === 0 && listStyle[id]
+      const $noChildNode = document.createElement("div");
+      $noChildNode.className =
+        documents.length > 0
+          ? "no-child not__show"
+          : listStyle[id]
           ? "no-child"
           : "no-child not__show";
-      $noChildren.innerText = "하위 메세지 없음";
-      $noChildren.style.paddingLeft = "28px";
-      $noChildren.style.height = "26px";
-      $noChildren.style.lineHeight = "26px";
 
-      $li.appendChild($noChildren);
+      $noChildNode.innerText = "하위 메세지 없음";
+      $noChildNode.style.paddingLeft = "28px";
+      $noChildNode.style.height = "26px";
+      $noChildNode.style.lineHeight = "26px";
+
+      $li.appendChild($noChildNode);
 
       if (documents && documents.length > 0) {
         const $ul = document.createElement("ul");

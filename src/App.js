@@ -1,7 +1,7 @@
 import DocumentNav from "./components/Navigation/DocNav.js";
 import PostEditPage from "./components/PostEditPage.js";
 import { getDocuments } from "./util/clientServer.js";
-import { setItem } from "./util/storage.js";
+import { initRouter } from "./router.js";
 
 export default function App({ $target }) {
   const $sidebar = document.createElement("div");
@@ -31,8 +31,6 @@ export default function App({ $target }) {
       ...postEditPage.state,
       selectedId: this.state.selectedId,
     });
-
-    this.render();
   };
 
   const documentNav = new DocumentNav({
@@ -60,8 +58,13 @@ export default function App({ $target }) {
     onChangeTitle: (title) => {
       documentNav.editDocItemTitle(title);
     },
-    onDeleteUndecidedItem: () => {
-      documentNav.deleteUndecidedDocItem();
+    onDeleteItem: async (selectedId) => {
+      const documents = await getDocuments();
+      this.setState({
+        ...this.state,
+        selectedId,
+        docList: documents,
+      });
     },
   });
 
@@ -74,14 +77,25 @@ export default function App({ $target }) {
     });
   };
 
-  this.render = () => {};
+  this.route = () => {
+    const { pathname } = window.location;
+    if (pathname === "/") {
+      $contentPage.innerHTML = "";
+    } else if (pathname.indexOf("/posts/") === 0) {
+      const [, , id] = pathname.split("/");
+      postEditPage.setState({
+        ...postEditPage.state,
+        selectedId: id,
+      });
+    }
+  };
 
   const init = async () => {
     await fetchAllData();
   };
 
   init();
-  // this.route();
-  // initRouter(() => this.route());
-  // window.addEventListener("popstate", () => this.route());
+  this.route();
+  initRouter(() => this.route());
+  window.addEventListener("popstate", () => this.route());
 }

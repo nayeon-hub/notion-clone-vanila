@@ -80,3 +80,16 @@ export const postCreateDoc = async (parentId) => {
     console.log(err);
   }
 };
+
+export const deleteDoc = async (id) => {
+  try {
+    const { data: document } = await client
+      .from("documents")
+      .delete()
+      .eq("id", id.toString());
+
+    return document;
+  } catch (err) {
+    console.log(err);
+  }
+};

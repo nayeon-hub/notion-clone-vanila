@@ -1,15 +1,16 @@
 import PostEditor from "./PostEditor.js";
 import { postEditDoc } from "../util/clientServer.js";
 import { getDocument } from "../util/clientServer.js";
+import { push } from "../router.js";
 
 export default function PostEditPage({
   $target,
   initialState,
   onChangeTitle,
-  onDeleteUndecidedItem,
+  onDeleteItem,
 }) {
   const $postEditLayout = document.createElement("div");
-  $target.appendChild($postEditLayout);
+  $postEditLayout.className = "post-edit-layout";
 
   this.state = initialState;
 
@@ -17,16 +18,14 @@ export default function PostEditPage({
 
   this.setState = async (nextState) => {
     this.state = nextState;
-    console.log(this.state.selectedId);
 
     if (this.state.selectedId) {
       const data = await getDocument(this.state.selectedId);
-      const { title, content } = data[0];
+      const post = data[0];
 
       postEditor.setState({
         ...postEditor.state,
-        title,
-        content,
+        post,
       });
     }
 
@@ -36,10 +35,9 @@ export default function PostEditPage({
   const postEditor = new PostEditor({
     $target: $postEditLayout,
     initialState: {
-      title: this.state.selectedData.title,
-      content: this.state.selectedData.content,
+      post: this.state.selectedData,
     },
-    onEditing: async ({ title, content }) => {
+    onEditing: async ({ post: { title, content } }) => {
       if (timer !== null) {
         clearTimeout(timer);
       }
@@ -48,16 +46,21 @@ export default function PostEditPage({
 
         if (isNew) {
           const doc = await postEditDoc(this.state.selectedId, title, content);
-          history.replaceState(null, null, `/post/${doc.id}`);
+          push(`/posts/${doc.id}`);
         } else {
           await postEditDoc(this.state.selectedId, title, content);
         }
-      }, 2000);
+      }, 1000);
     },
     onChangeTitle,
+    onDeleteItem,
   });
 
-  this.render = () => {};
+  this.render = () => {
+    if (this.state.selectedId) {
+      $target.appendChild($postEditLayout);
+    }
+  };
 
   this.render();
 }

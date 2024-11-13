@@ -17,7 +17,9 @@ export default function DocumentNav({
   this.setState = (nextState) => {
     this.state = nextState;
     docList.setState({
+      ...docList.state,
       docList: this.state.docList,
+      selectedId: this.state.selectedId,
     });
     actions.setState(this.state.docList);
   };
@@ -49,7 +51,6 @@ export default function DocumentNav({
   });
 
   this.editDocItemTitle = (title) => {
-    console.log(title);
     const { pathname } = window.location;
     const [, , id] = pathname.split("/");
     const $navLi = document.getElementById(`${id}`);
