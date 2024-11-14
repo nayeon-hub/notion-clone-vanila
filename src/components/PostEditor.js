@@ -65,7 +65,6 @@ export default function PostEditor({
   });
 
   $editor.querySelector("[name=content]").addEventListener("keyup", (e) => {
-    console.log("content keyup");
     let nextState = {
       ...this.state,
       post: {
@@ -90,7 +89,6 @@ export default function PostEditor({
   });
 
   $editor.querySelector("[name=content]").addEventListener("blur", (e) => {
-    console.log("content blur");
     const nextState = {
       ...this.state,
       post: {

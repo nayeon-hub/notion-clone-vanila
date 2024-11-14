@@ -1,4 +1,3 @@
-import { request } from "../../util/api.js";
 import NavHeader from "./NavHeader.js";
 import Actions from "./Actions.js";
 import DocList from "./DocList.js";
@@ -43,14 +42,6 @@ export default function DocumentNav({
     initialState,
     onDocListItemSelect,
   });
-
-  this.editDocItemTitle = (title) => {
-    const { pathname } = window.location;
-    const [, , id] = pathname.split("/");
-    const $navLi = document.getElementById(`${id}`);
-    const $title = $navLi.querySelector(".item-title").querySelector(".text");
-    $title.innerHTML = title;
-  };
 
   this.template = () => {};
 
