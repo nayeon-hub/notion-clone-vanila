@@ -20,18 +20,19 @@ export default function PostEditPage({
   this.setState = async (nextState) => {
     this.state = nextState;
 
-    postHeader.setState({
-      ...postHeader.state,
-      docList: this.state.docList,
-      selectedId: this.state.selectedId,
-    });
-
     if (this.state.selectedId) {
       const data = await getDocument(this.state.selectedId);
       const post = data[0];
 
       postEditor.setState({
         ...postEditor.state,
+        post,
+      });
+
+      postHeader.setState({
+        ...postHeader.state,
+        docList: this.state.docList,
+        selectedId: this.state.selectedId,
         post,
       });
     }
@@ -44,7 +45,9 @@ export default function PostEditPage({
     initialState: {
       docList: this.state.docList,
       selectedId: this.state.selectedId,
+      post: this.state.selectedData,
     },
+    onDeleteItem,
   });
 
   const postEditor = new PostEditor({

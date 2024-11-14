@@ -14,30 +14,27 @@ main {
 .sidebar {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   width: 276px;
   box-shadow: rgba(55, 53, 47, 0.09) 0px 1px 0px;
   background-color: rgb(247, 247, 245);
   height: 100vh;
+  position: relative;
 }
 
 .sidebar nav {
-  height: 92%;
-  padding: 17px 10px 10px 13px;
+  padding: 17px 10px 20px 13px;
+  overflow: hidden auto;
+  height: calc(100% - 53px - 53px);
 }
 
 .sidebar nav::-webkit-scrollbar {
   background-color: #d3d1cb rgba(0, 0, 0, 0);
 }
 
-.sidebar nav > ul {
-  height: 90%;
-  overflow-y: scroll;
-}
-
 .list-item {
   color: #5f5e5b;
   font-weight: 500;
+  overflow: hidden;
 }
 
 .contentPage {
@@ -136,9 +133,11 @@ main {
 }
 
 .header {
-  height: 45px;
+  height: 53px;
   font-size: 15px;
   font-weight: 400;
+  cursor: pointer;
+  padding: 17px 10px 10px 13px;
 }
 
 .header span {
@@ -146,11 +145,16 @@ main {
 }
 
 .create-actions-box {
-  min-height: 54px;
+  height: 54px;
   display: flex;
   align-items: center;
   padding: 12px 8px;
   border-top: 1px solid rgba(55, 53, 47, 0.09);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgb(247, 247, 245);
 }
 
 .create-action span {
@@ -187,6 +191,8 @@ main {
 
 .no-child {
   color: rgba(55, 53, 47, 0.5);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .post-header {

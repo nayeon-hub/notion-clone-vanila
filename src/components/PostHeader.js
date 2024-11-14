@@ -1,6 +1,9 @@
 import BreadCrumble from "./BreadCrumble.js";
+import { getItem, setItem } from "../util/storage.js";
+import { deleteDoc } from "../util/clientServer.js";
+import { push } from "../router.js";
 
-export default function PostHeader({ $target, initialState }) {
+export default function PostHeader({ $target, initialState, onDeleteItem }) {
   const $postHeader = document.createElement("div");
   $postHeader.className = "post-header";
   $target.appendChild($postHeader);
@@ -26,7 +29,35 @@ export default function PostHeader({ $target, initialState }) {
   });
 
   this.template = () => {
-    const $header = document.createElement("div");
-    $header.className = "post-header";
+    const $button = document.createElement("button");
+    $button.className = "post-delete-button";
+    $button.innerText = "삭제";
+    $postHeader.appendChild($button);
   };
+
+  this.init = () => {
+    this.template();
+  };
+
+  this.init();
+
+  $postHeader.querySelector("button").addEventListener("click", async () => {
+    const { pathname } = window.location;
+    const [, , id] = pathname.split("/");
+    const {
+      post: { parentId },
+    } = this.state;
+
+
+    const listStyle = getItem("listStyle", {});
+    delete listStyle[id];
+    setItem("listStyle", listStyle);
+
+    if (confirm("해당 게시글을 삭제하시겠습니까?")) {
+      await deleteDoc(id);
+      onDeleteItem(`${parentId}`);
+      if (parentId) push(`/posts/${parentId}`);
+      else push("/");
+    }
+  });
 }

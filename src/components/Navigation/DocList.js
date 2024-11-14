@@ -8,8 +8,10 @@ export default function DocList({
   initialState,
   onDocListItemSelect,
 }) {
+  const $nav = document.createElement("nav");
+  $target.appendChild($nav);
   const $ul = document.createElement("ul");
-  $target.appendChild($ul);
+  $nav.appendChild($ul);
 
   this.state = initialState;
 

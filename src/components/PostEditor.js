@@ -16,8 +16,7 @@ export default function PostEditor({
 
   $editor.innerHTML = `
         <div name="title" class="editor-title" contentEditable="true" placeholder="새페이지"></div>
-        <div name="content" class="editor-content"contentEditable="true" placeholder="나만의 멋진 글을 작성해보세요!"></div>
-        <button>삭제</button>`;
+        <div name="content" class="editor-content"contentEditable="true" placeholder="나만의 멋진 글을 작성해보세요!"></div>`;
 
   this.setState = (nextState) => {
     this.state = nextState;
@@ -98,24 +97,5 @@ export default function PostEditor({
     };
 
     this.setState(nextState);
-  });
-
-  $editor.querySelector("button").addEventListener("click", async () => {
-    const { pathname } = window.location;
-    const [, , id] = pathname.split("/");
-    const {
-      post: { parentId },
-    } = this.state;
-
-    const listStyle = getItem("listStyle", {});
-    delete listStyle[id];
-    setItem("listStyle", listStyle);
-
-    if (confirm("해당 게시글을 삭제하시겠습니까?")) {
-      await deleteDoc(id);
-      onDeleteItem(`${parentId}`);
-      if (parentId) push(`/posts/${parentId}`);
-      else push("/");
-    }
   });
 }

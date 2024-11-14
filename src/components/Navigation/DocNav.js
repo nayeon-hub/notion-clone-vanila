@@ -8,9 +8,6 @@ export default function DocumentNav({
   onDocListItemSelect,
 }) {
   // navigation
-  const $nav = document.createElement("nav");
-  $target.appendChild($nav);
-
   this.state = initialState;
 
   this.setState = (nextState) => {
@@ -24,12 +21,12 @@ export default function DocumentNav({
   };
 
   new NavHeader({
-    $target: $nav,
+    $target,
     initialState,
   });
 
   const docList = new DocList({
-    $target: $nav,
+    $target,
     initialState: {
       docList: this.state.docList,
       selectedId: this.state.selectedId,
