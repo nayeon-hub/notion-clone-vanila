@@ -2,6 +2,7 @@ import PostEditor from "./PostEditor.js";
 import { postEditDoc } from "../util/clientServer.js";
 import { getDocument } from "../util/clientServer.js";
 import { push } from "../router.js";
+import PostHeader from "./PostHeader.js";
 
 export default function PostEditPage({
   $target,
@@ -19,6 +20,12 @@ export default function PostEditPage({
   this.setState = async (nextState) => {
     this.state = nextState;
 
+    postHeader.setState({
+      ...postHeader.state,
+      docList: this.state.docList,
+      selectedId: this.state.selectedId,
+    });
+
     if (this.state.selectedId) {
       const data = await getDocument(this.state.selectedId);
       const post = data[0];
@@ -31,6 +38,14 @@ export default function PostEditPage({
 
     this.render();
   };
+
+  const postHeader = new PostHeader({
+    $target: $postEditLayout,
+    initialState: {
+      docList: this.state.docList,
+      selectedId: this.state.selectedId,
+    },
+  });
 
   const postEditor = new PostEditor({
     $target: $postEditLayout,

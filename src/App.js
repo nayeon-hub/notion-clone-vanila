@@ -29,6 +29,7 @@ export default function App({ $target }) {
 
     postEditPage.setState({
       ...postEditPage.state,
+      docList: this.state.docList,
       selectedId: this.state.selectedId,
     });
   };
@@ -54,9 +55,20 @@ export default function App({ $target }) {
     initialState: {
       selectedId: this.state.selectedId,
       selectedData: {},
+      docList: this.state.docList,
     },
     onChangeTitle: (title) => {
-      documentNav.editDocItemTitle(title);
+      const { pathname } = window.location;
+      const [, , id] = pathname.split("/");
+      const $nav = document.querySelector(".sidebar").querySelector("nav");
+      const $navLi = $nav.querySelector(`[id='${id}']`);
+      const $title = $navLi.querySelector(".item-title").querySelector(".text");
+      $title.innerHTML = title;
+
+      const $postHeader = document.querySelector(".post-header");
+      const $postBread = $postHeader.querySelector(".post-breadCrumble");
+      const $breadItem = $postBread.querySelector(`[id='${id}']`);
+      $breadItem.innerHTML = title;
     },
     onDeleteItem: async (selectedId) => {
       const documents = await getDocuments();
