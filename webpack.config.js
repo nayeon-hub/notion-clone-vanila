@@ -14,7 +14,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "public"),
     filename: "[name]__bundle.js",
-    publicPath: "./",
+    publicPath: "/",
   },
   module: {
     rules: [
