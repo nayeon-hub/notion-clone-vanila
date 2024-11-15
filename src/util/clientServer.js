@@ -1,4 +1,4 @@
-import { SUPABASE_URL, SUPABASE_KEY } from "../various.js";
+// import { SUPABASE_URL, SUPABASE_KEY } from "../various.js";
 
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
