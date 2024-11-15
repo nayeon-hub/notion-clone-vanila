@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "프로그래머스 노션 클로닝 프로젝트 업그레이드",
   "main": "main.js",
-  "homepage": "https://nayeon-hub.github.io/notion-clone-vanila/",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --config webpack.config.js",
     "start": "webpack serve",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
