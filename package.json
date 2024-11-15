@@ -4,8 +4,7 @@
   "description": "프로그래머스 노션 클로닝 프로젝트 업그레이드",
   "main": "index.js",
   "scripts": {
-    "build": "wepback --mode=production",
-    "predeploy": "npm run build",
+    "build": "webpack --config webpack.config.js",
     "deploy": "gh-pages -d dist",
     "start": "webpack serve --open --mode=development"
   },
