@@ -3,6 +3,10 @@ const supabseUrl = process.env.SUPABASE_URL;
 
 const client = supabase.createClient(supabseUrl, supabseKey);
 
+if (!supabaseUrl || !supabaseKey) {
+  console.error("Supabase URL or Key is missing!");
+}
+
 function dfs(visited, data, idx, currentDocuments) {
   currentDocuments.push({ ...data[idx], style: false });
   for (let i = 0; i < data.length; i++) {
