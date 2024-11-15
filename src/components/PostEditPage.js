@@ -28,7 +28,6 @@ export default function PostEditPage({
         ...postEditor.state,
         post,
       });
-      console.log(this.state);
 
       postHeader.setState({
         ...postHeader.state,
