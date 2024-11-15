@@ -8,12 +8,13 @@ dotenv.config();
 module.exports = {
   mode: "development",
   entry: {
-    index: "./src/main.js",
+    index: path.resolve(__dirname, "src/index.js"),
   },
   output: {
-    path: path.resolve(__dirname, "public"),
+    path: path.resolve(__dirname, "bundles"),
     filename: "[name]__bundle.js",
     publicPath: "/",
+    clean: true,
   },
   module: {
     rules: [
@@ -21,17 +22,25 @@ module.exports = {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
       },
+      {
+        test: /\.html$/i,
+        use: ["html-loader"],
+      },
     ],
   },
   devServer: {
-    historyApiFallback: true,
+    static: {
+      directory: path.join(__dirname, "bundles"),
+    },
     port: 9000,
-    static: "./public",
+    historyApiFallback: true,
+    open: true,
+    compress: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./index.html",
-      filename: "./index.html",
+      template: "index.html",
+      template: path.resolve(__dirname, "public/index.html"),
     }),
 
     new webpack.DefinePlugin({
