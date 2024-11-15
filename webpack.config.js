@@ -13,7 +13,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "docs"),
     filename: "[name]__bundle.js",
-    publicPath: "/",
+    publicPath: "/notion-clone-vanila",
   },
   module: {
     rules: [
