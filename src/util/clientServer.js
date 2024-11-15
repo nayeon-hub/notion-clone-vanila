@@ -1,11 +1,7 @@
-// import { SUPABASE_URL, SUPABASE_KEY } from "../various.js";
-// import dotenv from "dotenv";
+const supabseKey = process.env.SUPABASE_KEY;
+const supabseUrl = process.env.SUPABASE_URL;
 
-// dotenv.config();
-
-// const { SUPABASE_URL, SUPABASE_KEY } = process.env;
-
-const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const client = supabase.createClient(supabseUrl, supabseKey);
 
 function dfs(visited, data, idx, currentDocuments) {
   currentDocuments.push({ ...data[idx], style: false });
@@ -87,11 +83,12 @@ export const postCreateDoc = async (parentId) => {
 };
 
 export const deleteDoc = async (id) => {
+  if (id) id = id.toString();
   try {
     const { data: document } = await client
       .from("documents")
       .delete()
-      .eq("id", id.toString());
+      .eq("id", id);
 
     return document;
   } catch (err) {

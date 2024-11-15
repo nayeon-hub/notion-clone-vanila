@@ -1,0 +1,28 @@
+{
+  "name": "notion-clone-vanila",
+  "version": "1.0.0",
+  "description": "프로그래머스 노션 클로닝 프로젝트 업그레이드",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "dev": "webpack serve --history-api-fallback"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^6.2.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.2",
+    "mini-css-extract-plugin": "^2.2.1",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.1",
+    "dotenv": "^16.4.5",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "stream-browserify": "^3.0.0",
+    "vm-browserify": "^1.1.2",
+    "webpack-dev-server": "^4.0.0"
+  }
+}
