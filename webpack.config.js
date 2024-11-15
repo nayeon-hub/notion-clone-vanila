@@ -12,7 +12,7 @@ module.exports = {
     index: "./src/main.js",
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "build"),
     filename: "[name]__bundle.js",
     publicPath: "/",
   },
@@ -27,12 +27,12 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     port: 9000,
-    static: "./dist",
+    static: "./build",
   },
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
-      template: path.resolve(__dirname, "public/index.html"),
+      template: path.resolve(__dirname, "./index.html"),
     }),
     new MiniCssExtractPlugin(),
     new webpack.DefinePlugin({
