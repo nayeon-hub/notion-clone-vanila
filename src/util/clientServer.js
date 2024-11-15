@@ -3,7 +3,7 @@
 
 // dotenv.config();
 
-const { SUPABASE_URL, SUPABASE_KEY } = process.env;
+// const { SUPABASE_URL, SUPABASE_KEY } = process.env;
 
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
