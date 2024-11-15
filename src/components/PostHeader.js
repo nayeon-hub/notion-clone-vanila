@@ -48,14 +48,13 @@ export default function PostHeader({ $target, initialState, onDeleteItem }) {
       post: { parentId },
     } = this.state;
 
-
     const listStyle = getItem("listStyle", {});
     delete listStyle[id];
     setItem("listStyle", listStyle);
 
     if (confirm("해당 게시글을 삭제하시겠습니까?")) {
       await deleteDoc(id);
-      onDeleteItem(`${parentId}`);
+      onDeleteItem(parentId);
       if (parentId) push(`/posts/${parentId}`);
       else push("/");
     }

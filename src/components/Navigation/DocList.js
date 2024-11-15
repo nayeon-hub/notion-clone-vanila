@@ -110,7 +110,8 @@ export default function DocList({
         await deleteDoc(currentId);
 
         if (currentId === this.state.selectedId) {
-          push(`/posts/${parentId}`);
+          if (parentId) push(`/posts/${parentId}`);
+          else push("/");
         }
 
         if (clickedUlChildNodes.length === 1) {

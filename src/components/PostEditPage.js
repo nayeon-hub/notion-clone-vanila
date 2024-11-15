@@ -20,7 +20,9 @@ export default function PostEditPage({
   this.setState = async (nextState) => {
     this.state = nextState;
 
-    if (this.state.selectedId) {
+    console.log(this.state);
+
+    if (Boolean(this.state.selectedId)) {
       const data = await getDocument(this.state.selectedId);
       const post = data[0];
 
@@ -28,6 +30,7 @@ export default function PostEditPage({
         ...postEditor.state,
         post,
       });
+      console.log(this.state);
 
       postHeader.setState({
         ...postHeader.state,
