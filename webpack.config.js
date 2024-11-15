@@ -8,7 +8,7 @@ dotenv.config();
 module.exports = {
   mode: "development",
   entry: {
-    index: "./src/index.js",
+    index: "./src/main.js",
   },
   output: {
     path: path.resolve(__dirname, "docs"),
