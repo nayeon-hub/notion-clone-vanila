@@ -12,7 +12,7 @@ module.exports = {
     index: "./src/main.js",
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "build"),
     filename: "[name]__bundle.js",
     publicPath: "./",
   },
@@ -26,11 +26,11 @@ module.exports = {
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, "dist"),
+      directory: path.join(__dirname, "build"),
     },
     historyApiFallback: true,
     port: 9000,
-    static: "./dist",
+    static: "./build",
   },
   plugins: [
     new HtmlWebpackPlugin({
