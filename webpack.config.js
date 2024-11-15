@@ -11,7 +11,7 @@ module.exports = {
     index: "./src/main.js",
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "public"),
     filename: "[name]__bundle.js",
     publicPath: "/",
   },
@@ -26,7 +26,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     port: 9000,
-    static: "./dist",
+    static: "./public",
   },
   plugins: [
     new HtmlWebpackPlugin({

@@ -1,5 +1,5 @@
 node_modules
-dist
+public
 vercel.json
 various.js
 .env
