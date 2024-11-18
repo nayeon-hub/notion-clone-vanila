@@ -14,8 +14,10 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "[name]__bundle.js",
-    publicPath: "./",
+    publicPath: "/",
+    clean: true,
   },
+
   module: {
     rules: [
       {
@@ -30,7 +32,7 @@ module.exports = {
     },
     historyApiFallback: true,
     port: 9000,
-    static: "./build",
+    hot: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
