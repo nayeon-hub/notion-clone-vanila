@@ -71,7 +71,6 @@ export default function PostEditPage({
       }, 1000);
     },
     onChangeTitle,
-    onDeleteItem,
   });
 
   this.render = () => {

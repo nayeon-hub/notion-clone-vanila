@@ -1,13 +1,8 @@
-import { push } from "../router.js";
-import { deleteDoc } from "../util/clientServer.js";
-import { getItem, setItem } from "../util/storage.js";
-
 export default function PostEditor({
   $target,
   initialState,
   onEditing,
   onChangeTitle,
-  onDeleteItem,
 }) {
   const $editor = document.createElement("div");
   $editor.className = "editor";
