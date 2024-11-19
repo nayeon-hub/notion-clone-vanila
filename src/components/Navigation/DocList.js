@@ -2,7 +2,7 @@ import { postCreateDoc, deleteDoc } from "../../util/clientServer.js";
 import DocListItem from "./DocListItem.js";
 import { push } from "../../router.js";
 import { setItem, getItem } from "../../util/storage.js";
-
+import { findTargetData, collectIdsData } from "../../util/processData.js";
 export default function DocList({
   $target,
   initialState,
@@ -107,7 +107,11 @@ export default function DocList({
 
         const clickedLiNode = evt.target.closest("li");
         const currentId = clickedLiNode.id;
-        await deleteDoc(currentId);
+
+        const deletedDataObj = findTargetData(currentId, this.state.docList);
+        const collectedIdArr = collectIdsData(deletedDataObj);
+
+        await deleteDoc(collectedIdArr);
 
         if (currentId === this.state.selectedId) {
           if (parentId) push(`/posts/${parentId}`);

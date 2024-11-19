@@ -82,13 +82,12 @@ export const postCreateDoc = async (parentId) => {
   }
 };
 
-export const deleteDoc = async (id) => {
-  if (id) id = id.toString();
+export const deleteDoc = async (idArr) => {
   try {
     const { data: document } = await client
       .from("documents")
       .delete()
-      .eq("id", id);
+      .in("id", idArr);
 
     return document;
   } catch (err) {
