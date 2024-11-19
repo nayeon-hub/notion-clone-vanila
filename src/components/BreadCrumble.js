@@ -1,5 +1,5 @@
 import { push } from "../router.js";
-import { exploreData } from "../util/exploreData.js";
+import { collectRoutesData } from "../util/processData.js";
 
 export default function BreadCrumble({ $target, initialState }) {
   const $breadCrumble = document.createElement("div");
@@ -14,7 +14,10 @@ export default function BreadCrumble({ $target, initialState }) {
   };
 
   this.template = () => {
-    const routesData = exploreData(this.state.docList, this.state.selectedId);
+    const routesData = collectRoutesData(
+      this.state.docList,
+      this.state.selectedId
+    );
     $breadCrumble.innerHTML = routesData
       .map(
         ({ id, title }, idx) =>

@@ -2,6 +2,7 @@ import BreadCrumble from "./BreadCrumble.js";
 import { getItem, setItem } from "../util/storage.js";
 import { deleteDoc } from "../util/clientServer.js";
 import { push } from "../router.js";
+import { findTargetData, collectIdsData } from "../util/processData.js";
 
 export default function PostHeader({ $target, initialState, onDeleteItem }) {
   const $postHeader = document.createElement("div");
@@ -53,7 +54,11 @@ export default function PostHeader({ $target, initialState, onDeleteItem }) {
     setItem("listStyle", listStyle);
 
     if (confirm("해당 게시글을 삭제하시겠습니까?")) {
-      await deleteDoc(id);
+      const deletedDataObj = findTargetData(id, this.state.docList);
+      const collectedIdArr = collectIdsData(deletedDataObj);
+
+      await deleteDoc(collectedIdArr);
+
       onDeleteItem(parentId);
       if (parentId) push(`/posts/${parentId}`);
       else push("/");
