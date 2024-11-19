@@ -22,7 +22,11 @@ export default function DocListItem({ $target, initialState }) {
       const listStyle = getItem("listStyle", {});
 
       const $title = document.createElement("div");
-      $title.className = "item-title";
+
+      $title.className = `item-title ${
+        this.state.selectedId === `${id}` ? "selected" : ""
+      }`;
+
       $title.innerHTML = ` 
           <div class="item-text" style="display : flex;">
             <button class="material-icons arrow__btn ${
@@ -67,6 +71,7 @@ export default function DocListItem({ $target, initialState }) {
           initialState: {
             docs: documents,
             depth: this.state.depth + 1,
+            selectedId: this.state.selectedId,
           },
         });
       }

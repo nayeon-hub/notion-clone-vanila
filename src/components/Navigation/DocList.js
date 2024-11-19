@@ -23,15 +23,18 @@ export default function DocList({
     this.state = nextState;
 
     docListItem.setState({
+      selectedId: this.state.selectedId,
       docs: this.state.docList,
       depth: 1,
     });
   };
 
+
   const docListItem = new DocListItem({
     $target: $ul,
     initialState: {
       docs: this.state.docList,
+      selectedId: this.state.selectedId,
       depth: 1,
     },
   });

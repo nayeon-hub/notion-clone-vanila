@@ -9,6 +9,7 @@ export default function PostEditPage({
   initialState,
   onChangeTitle,
   onDeleteItem,
+  onSelectId,
 }) {
   const $postEditLayout = document.createElement("div");
   $postEditLayout.className = "post-edit-layout";
@@ -48,6 +49,7 @@ export default function PostEditPage({
       post: this.state.selectedData,
     },
     onDeleteItem,
+    onSelectId,
   });
 
   const postEditor = new PostEditor({

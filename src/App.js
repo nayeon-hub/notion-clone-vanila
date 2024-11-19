@@ -70,12 +70,18 @@ export default function App({ $target }) {
       const $breadItem = $postBread.querySelector(`[id='${id}']`);
       $breadItem.innerHTML = title;
     },
-    onDeleteItem: async (selectedId) => {
+    onDeleteItem: async (parentId) => {
       const documents = await getDocuments();
       this.setState({
         ...this.state,
-        selectedId,
+        selectedId: parentId,
         docList: documents,
+      });
+    },
+    onSelectId: (selectedId) => {
+      this.setState({
+        ...this.state,
+        selectedId,
       });
     },
   });

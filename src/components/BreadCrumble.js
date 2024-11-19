@@ -1,7 +1,7 @@
 import { push } from "../router.js";
 import { collectRoutesData } from "../util/processData.js";
 
-export default function BreadCrumble({ $target, initialState }) {
+export default function BreadCrumble({ $target, initialState, onSelectId }) {
   const $breadCrumble = document.createElement("div");
   $breadCrumble.className = "post-breadCrumble";
   $target.appendChild($breadCrumble);
@@ -42,6 +42,7 @@ export default function BreadCrumble({ $target, initialState }) {
 
   $breadCrumble.addEventListener("click", (evt) => {
     const { id: routeId } = evt.target;
+    onSelectId(routeId);
 
     if (routeId) push(`/posts/${routeId}`);
   });

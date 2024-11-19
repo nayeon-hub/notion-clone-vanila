@@ -4,7 +4,12 @@ import { deleteDoc } from "../util/clientServer.js";
 import { push } from "../router.js";
 import { findTargetData, collectIdsData } from "../util/processData.js";
 
-export default function PostHeader({ $target, initialState, onDeleteItem }) {
+export default function PostHeader({
+  $target,
+  initialState,
+  onDeleteItem,
+  onSelectId,
+}) {
   const $postHeader = document.createElement("div");
   $postHeader.className = "post-header";
   $target.appendChild($postHeader);
@@ -27,6 +32,7 @@ export default function PostHeader({ $target, initialState, onDeleteItem }) {
       docList: this.state.docList,
       selectedId: this.state.selectedId,
     },
+    onSelectId,
   });
 
   this.template = () => {
