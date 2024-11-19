@@ -1,3 +1,5 @@
+import { getItem } from "./storage";
+
 function findDfs(data, targetId) {
   if (data.id === targetId) return data;
 
@@ -63,4 +65,24 @@ export function collectRoutesData(documents, targetId) {
   }
 
   return routesData;
+}
+
+function closeStyleDfs(data, styleData) {
+  styleData.value[data.id] = false;
+
+  for (let i = 0; i < data.documents.length; i++) {
+    closeStyleDfs(data.documents[i], styleData);
+  }
+}
+
+export function closeDocData(data) {
+  const listStyle = getItem("listStyle", []);
+  const styleData = { value: listStyle };
+  styleData.value[data.id] = false;
+
+  for (let i = 0; i < data.documents.length; i++) {
+    closeStyleDfs(data.documents[i], styleData);
+  }
+
+  return styleData.value;
 }

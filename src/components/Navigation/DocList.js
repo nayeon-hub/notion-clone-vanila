@@ -2,7 +2,11 @@ import { postCreateDoc, deleteDoc } from "../../util/clientServer.js";
 import DocListItem from "./DocListItem.js";
 import { push } from "../../router.js";
 import { setItem, getItem } from "../../util/storage.js";
-import { findTargetData, collectIdsData } from "../../util/processData.js";
+import {
+  findTargetData,
+  collectIdsData,
+  closeDocData,
+} from "../../util/processData.js";
 export default function DocList({
   $target,
   initialState,
@@ -51,8 +55,11 @@ export default function DocList({
 
       if (evt.target.className.includes("rotated")) {
         evt.target.className = "material-icons arrow__btn noRotated";
-        listStyle[id] = false;
+
+        const targetedData = findTargetData(id, this.state.docList);
+        const listStyle = closeDocData(targetedData);
         setItem("listStyle", listStyle);
+        this.setState(this.state);
       } else {
         evt.target.className = "material-icons arrow__btn rotated";
         listStyle[id] = true;
