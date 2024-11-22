@@ -8,12 +8,6 @@ span,
 applet,
 object,
 iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
 p,
 blockquote,
 pre,
@@ -373,5 +367,10 @@ main {
   margin-left: 2px;
   margin-right: 2px;
   color: rgba(55, 53, 47, 0.5);
+}
+
+.selected {
+  background-color: rgba(55, 53, 47, 0.06);
+  border-radius: 5px;
 }
 
